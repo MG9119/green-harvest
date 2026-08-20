@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="650" viewBox="0 0 900 650" role="img" aria-label="Green Harvest placeholder">
+  <rect width="900" height="650" fill="#eaf6ec"/>
+  <circle cx="450" cy="290" r="95" fill="#2f8f46" opacity="0.16"/>
+  <path d="M455 365c75-34 118-91 118-164-91 9-156 70-165 158 17 10 31 11 47 6Z" fill="#2f8f46"/>
+  <path d="M407 358c-44-26-71-65-78-116 58 2 105 37 120 92-11 14-25 21-42 24Z" fill="#174f2a" opacity="0.78"/>
+  <text x="450" y="455" text-anchor="middle" fill="#174f2a" font-family="Arial, sans-serif" font-size="42" font-weight="700">Green Harvest</text>
+</svg>
