@@ -421,31 +421,37 @@ function imageUrl(
 ): string {
     $image = trim((string) $image);
 
-    /*
-     * Default placeholder.
-     */
+    $placeholder =
+        'https://images.pexels.com/photos/4846535/' .
+        'pexels-photo-4846535.jpeg?' .
+        'auto=compress&cs=tinysrgb&w=800';
+
     if ($image === '') {
-        return
-            'https://images.pexels.com/photos/4846535/' .
-            'pexels-photo-4846535.jpeg?' .
-            'auto=compress&cs=tinysrgb&w=800';
+        return $placeholder;
     }
 
-    /*
-     * Already an external URL.
-     */
     if (preg_match('/^https?:\/\//i', $image)) {
         return $image;
     }
 
-    /*
-     * Already contains a known application path.
-     */
     if (
         str_starts_with($image, 'uploads/') ||
         str_starts_with($image, 'assets/')
     ) {
         return url($image);
+    }
+
+    if (
+        str_starts_with($image, 'products/') ||
+        str_starts_with($image, 'categories/')
+    ) {
+        require_once __DIR__ . '/s3.php';
+
+        $s3Url = s3ImageUrl($image, 60);
+
+        return $s3Url !== ''
+            ? $s3Url
+            : $placeholder;
     }
 
     return url(

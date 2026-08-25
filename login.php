@@ -1572,6 +1572,76 @@ body {
 }
 
 
+
+.gh-google-coming-soon {
+
+    cursor:
+        not-allowed;
+
+    opacity:
+        .72;
+
+}
+
+
+.gh-google-coming-soon:hover {
+
+    transform:
+        none;
+
+    border-color:
+        rgba(20, 83, 45, .14);
+
+    background:
+        #ffffff;
+
+    color:
+        inherit;
+
+}
+
+
+.gh-google-coming-soon-badge {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin-left:
+        4px;
+
+    padding:
+        3px 7px;
+
+    border-radius:
+        999px;
+
+    background:
+        #dcfce7;
+
+    color:
+        #166534;
+
+    font-size:
+        .58rem;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .04em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
 .gh-google-icon {
 
     width:
@@ -2259,11 +2329,11 @@ and
                     <!-- GOOGLE -->
 
                     <a
-                        href="<?= e(
-                            $googleLoginUrl
-                        ) ?>"
-                        class="gh-google-login"
-                        aria-label="Sign in with Google"
+                        href="#"
+                        class="gh-google-login gh-google-coming-soon"
+                        aria-label="Google sign in coming soon"
+                        aria-disabled="true"
+                        onclick="return false;"
                     >
 
 
@@ -2336,6 +2406,10 @@ and
 
 
                         Continue with Google
+
+                        <span class="gh-google-coming-soon-badge">
+                            Coming Soon
+                        </span>
 
 
                     </a>

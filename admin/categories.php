@@ -80,12 +80,49 @@ $isLocalCategoryImage = static function (?string $image): bool {
 
 /*
 |--------------------------------------------------------------------------
-| Helper: Delete Local Category Image
+| Helper: Delete Category Image
 |--------------------------------------------------------------------------
+|
+| Supports:
+| - New category images stored in Amazon S3
+| - Older category images stored locally on EC2
+|
 */
 
 $deleteCategoryImage =
     static function (?string $image) use ($isLocalCategoryImage): void {
+
+        $image = trim((string) $image);
+
+        if ($image === '') {
+            return;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Amazon S3 Category Image
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            str_starts_with(
+                $image,
+                'categories/'
+            )
+        ) {
+
+            require_once dirname(__DIR__) . '/includes/s3.php';
+
+            s3Delete($image);
+
+            return;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Legacy Local Category Image
+        |--------------------------------------------------------------------------
+        */
 
         if (
             !$isLocalCategoryImage(
@@ -100,8 +137,14 @@ $deleteCategoryImage =
             DIRECTORY_SEPARATOR .
             $image;
 
-        if (is_file($path)) {
-            @unlink($path);
+        if (
+            is_file(
+                $path
+            )
+        ) {
+            @unlink(
+                $path
+            );
         }
     };
 
@@ -317,86 +360,23 @@ $uploadCategoryImage = static function (): ?string {
 
     /*
     |--------------------------------------------------------------------------
-    | Ensure Category Upload Directory Exists
+    | Upload Category Image To Amazon S3
     |--------------------------------------------------------------------------
     */
 
-    if (
-        !is_dir(
-            CATEGORY_UPLOAD_PATH
-        )
-    ) {
+    require_once dirname(__DIR__) . '/includes/s3.php';
 
-        if (
-            !mkdir(
-                CATEGORY_UPLOAD_PATH,
-                0755,
-                true
-            ) &&
-            !is_dir(
-                CATEGORY_UPLOAD_PATH
-            )
-        ) {
+    $s3Key = s3UploadImage(
+        [
+            'tmp_name' => $temporaryPath,
+            'name'     => 'category-image',
+            'error'    => UPLOAD_ERR_OK,
+            'size'     => filesize($temporaryPath) ?: 0,
+        ],
+        'categories'
+    );
 
-            throw new RuntimeException(
-                'The category upload directory could not be created.'
-            );
-        }
-    }
-
-
-    if (
-        !is_writable(
-            CATEGORY_UPLOAD_PATH
-        )
-    ) {
-
-        throw new RuntimeException(
-            'The category upload directory is not writable.'
-        );
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Generate Secure Filename
-    |--------------------------------------------------------------------------
-    */
-
-    $extension =
-        $allowedMimeTypes[
-            $mimeType
-        ];
-
-
-    $fileName =
-        bin2hex(
-            random_bytes(16)
-        ) .
-        '.' .
-        $extension;
-
-
-    $destination =
-        CATEGORY_UPLOAD_PATH .
-        DIRECTORY_SEPARATOR .
-        $fileName;
-
-
-    if (
-        !move_uploaded_file(
-            $temporaryPath,
-            $destination
-        )
-    ) {
-
-        throw new RuntimeException(
-            'The category image could not be saved.'
-        );
-    }
-
-
-    return $fileName;
+    return $s3Key;
 };
 
 

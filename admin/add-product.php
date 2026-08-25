@@ -442,86 +442,23 @@ $uploadProductImage = static function (): ?string {
 
     /*
     |--------------------------------------------------------------------------
-    | Upload Directory
+    | Upload Product Image To Amazon S3
     |--------------------------------------------------------------------------
     */
 
-    if (
-        !is_dir(
-            PRODUCT_UPLOAD_PATH
-        )
-    ) {
+    require_once dirname(__DIR__) . '/includes/s3.php';
 
-        if (
-            !mkdir(
-                PRODUCT_UPLOAD_PATH,
-                0755,
-                true
-            ) &&
-            !is_dir(
-                PRODUCT_UPLOAD_PATH
-            )
-        ) {
+    $s3Key = s3UploadImage(
+        [
+            'tmp_name' => $temporaryPath,
+            'name'     => basename((string) ($_FILES['image']['name'] ?? 'product-image')),
+            'error'    => UPLOAD_ERR_OK,
+            'size'     => filesize($temporaryPath) ?: 0,
+        ],
+        'products'
+    );
 
-            throw new RuntimeException(
-                'The product upload directory could not be created.'
-            );
-        }
-    }
-
-
-    if (
-        !is_writable(
-            PRODUCT_UPLOAD_PATH
-        )
-    ) {
-
-        throw new RuntimeException(
-            'The product upload directory is not writable.'
-        );
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Secure Filename
-    |--------------------------------------------------------------------------
-    */
-
-    $extension =
-        $allowedMimeTypes[
-            $mimeType
-        ];
-
-
-    $fileName =
-        bin2hex(
-            random_bytes(16)
-        ) .
-        '.' .
-        $extension;
-
-
-    $destination =
-        PRODUCT_UPLOAD_PATH .
-        DIRECTORY_SEPARATOR .
-        $fileName;
-
-
-    if (
-        !move_uploaded_file(
-            $temporaryPath,
-            $destination
-        )
-    ) {
-
-        throw new RuntimeException(
-            'The product image could not be saved.'
-        );
-    }
-
-
-    return $fileName;
+    return $s3Key;
 };
 
 

@@ -1819,156 +1819,130 @@ require_once __DIR__ . '/includes/header.php';
         <div class="about-section-heading centered">
 
             <p class="about-eyebrow">
-                Our Team
+                Our Project Team
             </p>
-
 
             <h2>
                 Meet the team behind Green Harvest.
             </h2>
 
-
             <p>
-
-                A focused team working together to create
-                a better digital marketplace for fresh
-                food, customers and suppliers.
-
+                Green Harvest was developed as a collaborative
+                cloud computing capstone project, with each
+                member contributing to a specific area of the
+                application's design, development, deployment,
+                security and documentation.
             </p>
 
         </div>
 
 
-
         <div class="about-team-grid">
 
-
             <!-- MEMBER 1 -->
-
             <article class="about-team-card">
 
                 <div class="about-team-avatar">
-
-                    <i class="bi bi-person-fill"></i>
-
+                    <i class="bi bi-cloud-check-fill"></i>
                 </div>
 
-
                 <h3>
-                    Kwame Mensah
+                    Godwin Boateng Agyapong
                 </h3>
 
-
                 <p class="about-team-role">
-                    Founder &amp; CEO
+                    Project Lead &amp; Cloud/Deployment Engineer
+                    <br>
+                    Student ID: 2425403236
                 </p>
 
             </article>
-
 
 
             <!-- MEMBER 2 -->
-
             <article class="about-team-card">
 
                 <div class="about-team-avatar">
-
-                    <i class="bi bi-person-workspace"></i>
-
+                    <i class="bi bi-window"></i>
                 </div>
 
-
                 <h3>
-                    Ama Boateng
+                    Samuel Amo Adjei
                 </h3>
 
-
                 <p class="about-team-role">
-                    Operations Manager
+                    Frontend Developer
+                    <br>
+                    Student ID: 2425400321
                 </p>
 
             </article>
-
 
 
             <!-- MEMBER 3 -->
-
             <article class="about-team-card">
 
                 <div class="about-team-avatar">
-
                     <i class="bi bi-code-slash"></i>
-
                 </div>
 
-
                 <h3>
-                    Daniel Owusu
+                    Bismark Kyei Boateng
                 </h3>
 
-
                 <p class="about-team-role">
-                    Technology Lead
+                    Backend Developer
+                    <br>
+                    Student ID: 2425400268
                 </p>
 
             </article>
-
 
 
             <!-- MEMBER 4 -->
-
             <article class="about-team-card">
 
                 <div class="about-team-avatar">
-
-                    <i class="bi bi-headset"></i>
-
+                    <i class="bi bi-database-fill"></i>
                 </div>
 
-
                 <h3>
-                    Efua Asare
+                    Eugene Aidoo
                 </h3>
 
-
                 <p class="about-team-role">
-                    Customer Experience
+                    Database Administrator
+                    <br>
+                    Student ID: 2425403382
                 </p>
 
             </article>
-
 
 
             <!-- MEMBER 5 -->
-
             <article class="about-team-card">
 
                 <div class="about-team-avatar">
-
-                    <i class="bi bi-box-seam"></i>
-
+                    <i class="bi bi-shield-check"></i>
                 </div>
 
-
                 <h3>
-                    Michael Addo
+                    Elizabeth Ocansey
                 </h3>
 
-
                 <p class="about-team-role">
-                    Supply &amp; Partnerships
+                    QA, Security, Monitoring &amp; Report Writing
+                    <br>
+                    Student ID: 2425401394
                 </p>
 
             </article>
-
 
         </div>
 
     </div>
 
 </section>
-
-
 
 <!-- =========================================================
      CTA

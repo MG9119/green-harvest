@@ -500,10 +500,10 @@ $footerLogoUrl =
 
 
 /* =========================================================
-   CENTERED SOCIAL MEDIA
+   PROJECT REPOSITORY
 ========================================================= */
 
-.footer-social {
+.footer-project {
 
     width: 100%;
 
@@ -521,7 +521,7 @@ $footerLogoUrl =
 }
 
 
-.footer-social-title {
+.footer-project-title {
 
     display: block;
 
@@ -541,34 +541,24 @@ $footerLogoUrl =
 }
 
 
-.footer-social-links {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    flex-wrap: wrap;
-
-    gap: 10px;
-
-}
-
-
-.footer-social-link {
-
-    width: 42px;
-    height: 42px;
+.footer-github-link {
 
     display: inline-flex;
 
     align-items: center;
     justify-content: center;
 
+    gap: 9px;
+
+    min-height: 44px;
+
+    padding:
+        10px
+        18px;
+
     border:
         1px solid
-        rgba(255, 255, 255, .12);
+        rgba(255, 255, 255, .14);
 
     border-radius: 12px;
 
@@ -577,7 +567,9 @@ $footerLogoUrl =
 
     color: #ffffff;
 
-    font-size: 1rem;
+    font-size: .86rem;
+
+    font-weight: 700;
 
     text-decoration: none;
 
@@ -589,7 +581,14 @@ $footerLogoUrl =
 }
 
 
-.footer-social-link:hover {
+.footer-github-link i {
+
+    font-size: 1rem;
+
+}
+
+
+.footer-github-link:hover {
 
     color: #ffffff;
 
@@ -600,10 +599,9 @@ $footerLogoUrl =
         var(--gh-green-500);
 
     transform:
-        translateY(-3px);
+        translateY(-2px);
 
 }
-
 
 /* =========================================================
    BOTTOM BAR
@@ -791,19 +789,7 @@ $footerLogoUrl =
         max-width: 100%;
 
     }
-
-
-    .footer-social {
-
-        padding:
-            26px
-            0
-            30px;
-
-    }
-
-
-    .footer-bottom {
+.footer-bottom {
 
         flex-direction: column;
 
@@ -1202,67 +1188,34 @@ $footerLogoUrl =
 
 
         </div>
-
-
         <!-- =================================================
-             CENTERED SOCIAL MEDIA
+             PROJECT REPOSITORY
         ================================================== -->
 
-        <div class="footer-social">
+        <div class="footer-project">
 
-
-            <span class="footer-social-title">
-                Follow Green Harvest
+            <span class="footer-project-title">
+                Project Repository
             </span>
 
+            <a
+                href="https://github.com/MG9119/green-harvest"
+                class="footer-github-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="View Green Harvest project on GitHub"
+                title="Green Harvest GitHub Repository"
+            >
 
-            <div class="footer-social-links">
+                <i class="bi bi-github"></i>
 
+                View Green Harvest on GitHub
 
-                <a
-                    href="#"
-                    class="footer-social-link"
-                    aria-label="Facebook"
-                    title="Facebook"
-                >
-                    <i class="bi bi-facebook"></i>
-                </a>
-
-
-                <a
-                    href="#"
-                    class="footer-social-link"
-                    aria-label="Instagram"
-                    title="Instagram"
-                >
-                    <i class="bi bi-instagram"></i>
-                </a>
-
-
-                <a
-                    href="#"
-                    class="footer-social-link"
-                    aria-label="X"
-                    title="X"
-                >
-                    <i class="bi bi-twitter-x"></i>
-                </a>
-
-
-                <a
-                    href="#"
-                    class="footer-social-link"
-                    aria-label="TikTok"
-                    title="TikTok"
-                >
-                    <i class="bi bi-tiktok"></i>
-                </a>
-
-
-            </div>
-
+            </a>
 
         </div>
+
+
 
 
         <!-- =================================================
@@ -1298,6 +1251,14 @@ $footerLogoUrl =
 
                 <a href="<?= url('shop.php') ?>">
                     Shop
+                </a>
+
+                <a
+                    href="https://github.com/MG9119/green-harvest"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
                 </a>
 
 

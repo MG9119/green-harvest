@@ -468,8 +468,13 @@ $isLocalProductImage = static function (
 
 /*
 |--------------------------------------------------------------------------
-| Delete Managed Local Product Image
+| Delete Managed Product Image
 |--------------------------------------------------------------------------
+|
+| Supports both:
+| - New product images stored in Amazon S3
+| - Older product images stored locally on EC2
+|
 */
 
 $deleteLocalProductImage =
@@ -478,6 +483,42 @@ $deleteLocalProductImage =
     ) use (
         $isLocalProductImage
     ): void {
+
+        $image = trim((string) $image);
+
+        if ($image === '') {
+            return;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Amazon S3 Image
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            str_starts_with(
+                $image,
+                'products/'
+            )
+        ) {
+
+            require_once dirname(__DIR__) . '/includes/s3.php';
+
+            s3Delete(
+                $image
+            );
+
+            return;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Legacy Local EC2 Image
+        |--------------------------------------------------------------------------
+        */
 
         if (
             !$isLocalProductImage(
@@ -496,10 +537,14 @@ $deleteLocalProductImage =
 
 
         if (
-            is_file($path)
+            is_file(
+                $path
+            )
         ) {
 
-            @unlink($path);
+            @unlink(
+                $path
+            );
         }
     };
 
@@ -716,86 +761,23 @@ $uploadProductImage =
 
         /*
         |--------------------------------------------------------------------------
-        | Ensure Upload Directory Exists
+        | Upload Replacement Product Image To Amazon S3
         |--------------------------------------------------------------------------
         */
 
-        if (
-            !is_dir(
-                PRODUCT_UPLOAD_PATH
-            )
-        ) {
+        require_once dirname(__DIR__) . '/includes/s3.php';
 
-            if (
-                !mkdir(
-                    PRODUCT_UPLOAD_PATH,
-                    0755,
-                    true
-                ) &&
-                !is_dir(
-                    PRODUCT_UPLOAD_PATH
-                )
-            ) {
+        $s3Key = s3UploadImage(
+            [
+                'tmp_name' => $temporaryPath,
+                'name'     => 'replacement-product-image',
+                'error'    => UPLOAD_ERR_OK,
+                'size'     => filesize($temporaryPath) ?: 0,
+            ],
+            'products'
+        );
 
-                throw new RuntimeException(
-                    'The product upload directory could not be created.'
-                );
-            }
-        }
-
-
-        if (
-            !is_writable(
-                PRODUCT_UPLOAD_PATH
-            )
-        ) {
-
-            throw new RuntimeException(
-                'The product upload directory is not writable.'
-            );
-        }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Secure Filename
-        |--------------------------------------------------------------------------
-        */
-
-        $extension =
-            $allowedMimeTypes[
-                $mimeType
-            ];
-
-
-        $newFileName =
-            bin2hex(
-                random_bytes(16)
-            ) .
-            '.' .
-            $extension;
-
-
-        $destination =
-            PRODUCT_UPLOAD_PATH .
-            DIRECTORY_SEPARATOR .
-            $newFileName;
-
-
-        if (
-            !move_uploaded_file(
-                $temporaryPath,
-                $destination
-            )
-        ) {
-
-            throw new RuntimeException(
-                'The replacement product image could not be saved.'
-            );
-        }
-
-
-        return $newFileName;
+        return $s3Key;
     };
 
 
